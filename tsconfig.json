@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",            // Puedes cambiar esto según la versión de ECMAScript que necesites
+    "module": "commonjs",       // Para usar módulos comunes
+    "outDir": "./dist",         // Donde se generarán los archivos JavaScript
+    "strict": true               // Activa todas las comprobaciones de tipo
+  },
+  "include": ["src/**/*.ts"],   // Incluye todos los archivos .ts en la carpeta src
+  "exclude": ["node_modules"]    // Excluye la carpeta node_modules
+}

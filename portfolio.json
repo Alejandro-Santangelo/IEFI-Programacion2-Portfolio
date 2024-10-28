@@ -1,0 +1,19 @@
+[
+  {
+    "dni": "87654321",
+    "nombre": "María Gómez",
+    "habilidades": [
+      "Python",
+      "Java"
+    ],
+    "estudios": [
+      "Ingeniería de Software"
+    ],
+    "experiencias": [
+      "Analista en ABC"
+    ],
+    "expectativas": [
+      "Crecimiento profesional"
+    ]
+  }
+]
