@@ -1,9 +1,12 @@
 {
   "name": "examen-programacion-28---10---2024",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "npm run build && node dist/main.js",  
+    "dev": "tsc && node dist/main.js"  
   },
   "keywords": [],
   "author": "",
