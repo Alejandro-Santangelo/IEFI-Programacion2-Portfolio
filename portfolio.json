@@ -15,21 +15,5 @@
     "expectativas": [
       "Crecimiento profesional"
     ]
-  },
-  {
-    "dni": "16656885",
-    "nombre": "Cacho",
-    "habilidades": [
-      "Developer Backend"
-    ],
-    "estudios": [
-      "Terciarios"
-    ],
-    "experiencias": [
-      "desarrollador de Api Rest y Testing"
-    ],
-    "expectativas": [
-      "seguir aprendiendo"
-    ]
   }
 ]
