@@ -1,6 +1,6 @@
+import { Habilidad, Estudio, Experiencia, Expectativa, Persona } from '../src/interfaces'; // Ajusta la ruta según sea necesario
 import Portfolio from './portfolio';
 import * as readline from 'readline';
-import { Persona } from './portfolio'; // Asegúrate de ajustar la ruta según sea necesario
 
 class UI {
     private portfolio: Portfolio;
@@ -17,12 +17,13 @@ class UI {
 
     private mostrarMenu(): void {
         console.log("Opciones:");
-        console.log("1. Listar personas");
-        console.log("2. Agregar persona");
-        console.log("3. Borrar persona");
-        console.log("4. Modificar persona");
-        console.log("5. Listar persona por DNI"); // Nueva opción
-        console.log("6. Salir"); // Actualizar número de opción
+        console.log("1. Listado de Personas");
+        console.log("2. Mostrar Persona por DNI");
+        console.log("3. Agregar Persona");
+        console.log("4. Borrar Persona");
+        console.log("5. Modificar Persona");
+        
+        console.log("6. Salir");
 
         this.rl.question("Elige una opción: ", (opcion) => {
             switch (opcion) {
@@ -30,18 +31,19 @@ class UI {
                     this.portfolio.listarPersonas();
                     break;
                 case '2':
+                    this.listarPersonaPorDNI();
+                    return;    
+                case '3':
                     this.agregarPersona();
                     return;
-                case '3':
+                case '4':
                     this.borrarPersona();
                     return;
-                case '4':
+                case '5':
                     this.modificarPersona();
                     return;
-                case '5':
-                    this.listarPersonaPorDNI(); // Llama al nuevo método
-                    return;
-                case '6': // Actualizar número de opción
+                
+                case '6':
                     this.rl.close();
                     return;
                 default:
@@ -54,10 +56,24 @@ class UI {
     private agregarPersona(): void {
         this.rl.question("DNI: ", (dni) => {
             this.rl.question("Nombre: ", (nombre) => {
-                const nuevaPersona: Persona = { dni, nombre, habilidades: [], estudios: [], experiencias: [], expectativas: [] };
-                this.portfolio.agregarPersona(nuevaPersona);
-                console.log("Persona agregada.");
-                this.mostrarMenu();
+                this.rl.question("Apellido: ", (apellido) => {
+                    this.rl.question("Habilidades (separadas por comas): ", (habilidadesInput) => {
+                        const habilidades: Habilidad[] = habilidadesInput.split(',').map(h => ({ nombre: h.trim(), nivel: 'Básico' }));
+                        this.rl.question("Estudios (separadas por comas): ", (estudiosInput) => {
+                            const estudios: Estudio[] = estudiosInput.split(',').map(e => ({ titulo: e.trim(), institucion: 'Desconocida', anio: 2023 }));
+                            this.rl.question("Experiencias (separadas por comas): ", (experienciasInput) => {
+                                const experiencias: Experiencia[] = experienciasInput.split(',').map(e => ({ puesto: e.trim(), empresa: 'Desconocida', anioInicio: 2022, anioFin: 2023 }));
+                                this.rl.question("Expectativas: ", (expectativasInput) => {
+                                    const expectativas: Expectativa[] = expectativasInput.split(',').map(e => ({ descripcion: e.trim(), salarioEsperado: 0 }));
+                                    const nuevaPersona: Persona = { dni, nombre, apellido, habilidades, estudios, experiencias, expectativas };
+                                    this.portfolio.agregarPersona(nuevaPersona);
+                                    console.log("Persona agregada.");
+                                    this.mostrarMenu();
+                                });
+                            });
+                        });
+                    });
+                });
             });
         });
     }
@@ -78,42 +94,43 @@ class UI {
         this.rl.question("DNI de la persona a modificar: ", (dni) => {
             const persona = this.portfolio.buscarPersonaPorDNI(dni);
             if (persona) {
-                console.log(`Atributos actuales de la persona:`); 
+                console.log(`Atributos actuales de la persona:`);
                 console.log(`DNI: ${persona.dni}`);
                 console.log(`Nombre: ${persona.nombre}`);
-                console.log(`Habilidades: ${persona.habilidades.join(', ')}`);
-                console.log(`Estudios: ${persona.estudios.join(', ')}`);
-                console.log(`Experiencias: ${persona.experiencias.join(', ')}`);
-                console.log(`Expectativas: ${persona.expectativas.join(', ')}`);
-
+                console.log(`Apellido: ${persona.apellido}`);
+                console.log(`Habilidades: ${persona.habilidades.map(h => h.nombre).join(', ')}`);
+                console.log(`Estudios: ${persona.estudios.map(e => e.titulo).join(', ')}`);
+                console.log(`Experiencias: ${persona.experiencias.map(e => e.puesto).join(', ')}`);
+                console.log(`Expectativas: ${persona.expectativas.map(e => e.descripcion).join(', ')}`);
                 this.rl.question("Nuevo nombre (dejar en blanco para no modificar): ", (nombre) => {
                     const nuevosDatos: Partial<Persona> = {};
-
                     if (nombre) nuevosDatos.nombre = nombre;
-
-                    this.rl.question("Nuevas habilidades (separadas por comas, dejar en blanco para no modificar): ", (habilidadesInput) => {
-                        if (habilidadesInput) {
-                            nuevosDatos.habilidades = habilidadesInput.split(',').map(h => h.trim());
-                        }
-                        this.rl.question("Nuevos estudios (separados por comas, dejar en blanco para no modificar): ", (estudiosInput) => {
-                            if (estudiosInput) {
-                                nuevosDatos.estudios = estudiosInput.split(',').map(e => e.trim());
+                    this.rl.question("Nuevo apellido (dejar en blanco para no modificar): ", (apellido) => {
+                        if (apellido) nuevosDatos.apellido = apellido;
+                        this.rl.question("Nuevas habilidades (separadas por comas, dejar en blanco para no modificar): ", (habilidadesInput) => {
+                            if (habilidadesInput) {
+                                nuevosDatos.habilidades = habilidadesInput.split(',').map(h => ({ nombre: h.trim(), nivel: 'Básico' }));
                             }
-                            this.rl.question("Nuevas experiencias (separadas por comas, dejar en blanco para no modificar): ", (experienciasInput) => {
-                                if (experienciasInput) {
-                                    nuevosDatos.experiencias = experienciasInput.split(',').map(e => e.trim());
+                            this.rl.question("Nuevos estudios (separadas por comas, dejar en blanco para no modificar): ", (estudiosInput) => {
+                                if (estudiosInput) {
+                                    nuevosDatos.estudios = estudiosInput.split(',').map(e => ({ titulo: e.trim(), institucion: 'Desconocida', anio: 2023 }));
                                 }
-                                this.rl.question("Nuevas expectativas (separadas por comas, dejar en blanco para no modificar): ", (expectativasInput) => {
-                                    if (expectativasInput) {
-                                        nuevosDatos.expectativas = expectativasInput.split(',').map(e => e.trim());
+                                this.rl.question("Nuevas experiencias (separadas por comas, dejar en blanco para no modificar): ", (experienciasInput) => {
+                                    if (experienciasInput) {
+                                        nuevosDatos.experiencias = experienciasInput.split(',').map(e => ({ puesto: e.trim(), empresa: 'Desconocida', anioInicio: 2022, anioFin: 2023 }));
                                     }
-                                    const modificacionExitosa = this.portfolio.modificarPersona(dni, nuevosDatos);
-                                    if (modificacionExitosa) {
-                                        console.log('Persona modificada con éxito.');
-                                    } else {
-                                        console.log('No se encontró la persona.');
-                                    }
-                                    this.mostrarMenu();
+                                    this.rl.question("Nuevas expectativas (separadas por comas, dejar en blanco para no modificar): ", (expectativasInput) => {
+                                        if (expectativasInput) {
+                                            nuevosDatos.expectativas = expectativasInput.split(',').map(e => ({ descripcion: e.trim(), salarioEsperado: 0 }));
+                                        }
+                                        const modificacionExitosa = this.portfolio.modificarPersona(dni, nuevosDatos);
+                                        if (modificacionExitosa) {
+                                            console.log('Persona modificada con éxito.');
+                                        } else {
+                                            console.log('No se encontró la persona.');
+                                        }
+                                        this.mostrarMenu();
+                                    });
                                 });
                             });
                         });
@@ -133,14 +150,15 @@ class UI {
                 console.log(`Detalles de la persona:`);
                 console.log(`DNI: ${persona.dni}`);
                 console.log(`Nombre: ${persona.nombre}`);
-                console.log(`Habilidades: ${persona.habilidades.join(', ')}`);
-                console.log(`Estudios: ${persona.estudios.join(', ')}`);
-                console.log(`Experiencias: ${persona.experiencias.join(', ')}`);
-                console.log(`Expectativas: ${persona.expectativas.join(', ')}`);
+                console.log(`Apellido: ${persona.apellido}`);
+                console.log(`Habilidades: ${persona.habilidades.map(h => h.nombre).join(', ')}`);
+                console.log(`Estudios: ${persona.estudios.map(e => e.titulo).join(', ')}`);
+                console.log(`Experiencias: ${persona.experiencias.map(e => e.puesto).join(', ')}`);
+                console.log(`Expectativas: ${persona.expectativas.map(e => e.descripcion).join(', ')}`);
             } else {
                 console.log("Persona no encontrada.");
             }
-            this.mostrarMenu(); // Muestra el menú después de listar
+            this.mostrarMenu();
         });
     }
 }
