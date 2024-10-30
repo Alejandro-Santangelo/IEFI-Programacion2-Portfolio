@@ -2,36 +2,31 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Portfolio {
     constructor(archivoManager) {
-        this.archivoManager = archivoManager; // Inicializa el archivo manager
-        this.personas = this.archivoManager.cargar(); // Cargar datos al iniciar
+        this.archivoManager = archivoManager;
+        this.personas = this.archivoManager.cargar();
     }
-    // Método para agregar una persona
     agregarPersona(persona) {
         this.personas.push(persona);
-        this.archivoManager.guardar(this.personas); // Guardar cambios en el archivo
+        this.archivoManager.guardar(this.personas);
     }
-    // Método para modificar una persona existente
     modificarPersona(dni, nuevosDatos) {
         const index = this.personas.findIndex(persona => persona.dni === dni);
         if (index !== -1) {
-            // Actualiza los atributos de la persona
             this.personas[index] = Object.assign(Object.assign({}, this.personas[index]), nuevosDatos);
-            this.archivoManager.guardar(this.personas); // Guardar cambios en el archivo
-            return true; // Persona modificada
+            this.archivoManager.guardar(this.personas);
+            return true;
         }
-        return false; // Persona no encontrada
+        return false;
     }
-    // Método para borrar una persona por DNI
     borrarPersona(dni) {
         const index = this.personas.findIndex(persona => persona.dni === dni);
         if (index !== -1) {
             this.personas.splice(index, 1);
-            this.archivoManager.guardar(this.personas); // Guardar cambios en el archivo
-            return true; // Persona borrada
+            this.archivoManager.guardar(this.personas);
+            return true;
         }
-        return false; // Persona no encontrada
+        return false;
     }
-    // Método para listar personas
     listarPersonas() {
         console.log("Listado de personas:");
         if (this.personas.length === 0) {
@@ -41,33 +36,31 @@ class Portfolio {
             this.personas.forEach(persona => {
                 console.log(`DNI: ${persona.dni}`);
                 console.log(`Nombre: ${persona.nombre}`);
-                console.log(`Habilidades: ${persona.habilidades.join(", ")}`);
-                console.log(`Estudios: ${persona.estudios.join(", ")}`);
-                console.log(`Experiencias: ${persona.experiencias.join(", ")}`);
-                console.log(`Expectativas: ${persona.expectativas.join(", ")}`);
-                console.log('------------------------'); // Línea separadora para mejor legibilidad
+                console.log(`Apellido: ${persona.apellido}`);
+                console.log(`Habilidades: ${persona.habilidades.map(h => h.nombre).join(", ")}`);
+                console.log(`Estudios: ${persona.estudios.map(e => e.titulo).join(", ")}`);
+                console.log(`Experiencias: ${persona.experiencias.map(e => e.puesto).join(", ")}`);
+                console.log(`Expectativas: ${persona.expectativas.map(e => e.descripcion).join(", ")}`);
+                console.log('------------------------');
             });
         }
     }
-    // Método para buscar una persona por DNI
     buscarPersonaPorDNI(dni) {
         return this.personas.find(persona => persona.dni === dni);
     }
-    // Método para obtener los detalles de una persona por DNI
     obtenerPersonaPorDNI(dni) {
-        const persona = this.buscarPersonaPorDNI(dni);
-        return persona; // Devuelve la persona si se encuentra
+        return this.buscarPersonaPorDNI(dni);
     }
-    // Método para mostrar los detalles de una persona por DNI
     mostrarPersonaPorDNI(dni) {
         const persona = this.obtenerPersonaPorDNI(dni);
         if (persona) {
             console.log(`Detalles de la persona con DNI ${dni}:`);
             console.log(`Nombre: ${persona.nombre}`);
-            console.log(`Habilidades: ${persona.habilidades.join(", ")}`);
-            console.log(`Estudios: ${persona.estudios.join(", ")}`);
-            console.log(`Experiencias: ${persona.experiencias.join(", ")}`);
-            console.log(`Expectativas: ${persona.expectativas.join(", ")}`);
+            console.log(`Apellido: ${persona.apellido}`);
+            console.log(`Habilidades: ${persona.habilidades.map(h => h.nombre).join(", ")}`);
+            console.log(`Estudios: ${persona.estudios.map(e => e.titulo).join(", ")}`);
+            console.log(`Experiencias: ${persona.experiencias.map(e => e.puesto).join(", ")}`);
+            console.log(`Expectativas: ${persona.expectativas.map(e => e.descripcion).join(", ")}`);
         }
         else {
             console.log(`No se encontró una persona con DNI ${dni}.`);
