@@ -6,5 +6,3 @@ const archivoManager = new ArchivoManager('portfolio.json');
 const portfolio = new Portfolio(archivoManager);
 const ui = new UI(portfolio);
 
-// Llamamos a mostrar el menú
-//ui.mostrarMenu();

@@ -1,6 +1,7 @@
+import { IPersona } from './IPersona';
 import Portfolio from './portfolio';
 import * as readline from 'readline';
-import { Persona } from './portfolio'; // Asegúrate de ajustar la ruta según sea necesario
+
 
 class UI {
     private portfolio: Portfolio;
@@ -16,7 +17,7 @@ class UI {
     }
 
     private mostrarMenu(): void {
-        console.log("Opciones:");
+        console.log("\nMENÚ DE OPCIONES:");
         console.log("1. Listar personas");
         console.log("2. Agregar persona");
         console.log("3. Borrar persona");
@@ -24,7 +25,7 @@ class UI {
         console.log("5. Listar persona por DNI"); // Nueva opción
         console.log("6. Salir"); // Actualizar número de opción
 
-        this.rl.question("Elige una opción: ", (opcion) => {
+        this.rl.question("\nINGRESA LA OPCIÓN SELECCIONADA: ", (opcion) => {
             switch (opcion) {
                 case '1':
                     this.portfolio.listarPersonas();
@@ -52,30 +53,31 @@ class UI {
     }
 
     private agregarPersona(): void {
+        console.log("\nAGREGAR PERSONA:");
         this.rl.question("DNI: ", (dni) => {
             this.rl.question("Nombre: ", (nombre) => {
-                const nuevaPersona: Persona = { dni, nombre, habilidades: [], estudios: [], experiencias: [], expectativas: [] };
+                const nuevaPersona: IPersona = { dni, nombre, habilidades: [], estudios: [], experiencias: [], expectativas: [] };
                 this.portfolio.agregarPersona(nuevaPersona);
-                console.log("Persona agregada.");
+                console.log("\nPERSONA AGREGADA CON ÉXITO.");
                 this.mostrarMenu();
             });
         });
     }
 
     private borrarPersona(): void {
-        this.rl.question("DNI de la persona a borrar: ", (dni) => {
+        this.rl.question("\nINGRESE EL DNI DE LA PERSONA A BORRAR: ", (dni) => {
             const eliminado = this.portfolio.borrarPersona(dni);
             if (eliminado) {
-                console.log("Persona borrada.");
+                console.log("\nPERSONA BORRADA CON ÉXITO.");
             } else {
-                console.log("Persona no encontrada.");
+                console.log("\nPERSONA NO ENCONTRADA.");
             }
             this.mostrarMenu();
         });
     }
 
     private modificarPersona(): void {
-        this.rl.question("DNI de la persona a modificar: ", (dni) => {
+        this.rl.question("\nDNI de la persona a modificar: ", (dni) => {
             const persona = this.portfolio.buscarPersonaPorDNI(dni);
             if (persona) {
                 console.log(`Atributos actuales de la persona:`); 
@@ -87,7 +89,7 @@ class UI {
                 console.log(`Expectativas: ${persona.expectativas.join(', ')}`);
 
                 this.rl.question("Nuevo nombre (dejar en blanco para no modificar): ", (nombre) => {
-                    const nuevosDatos: Partial<Persona> = {};
+                    const nuevosDatos: Partial<IPersona> = {};
 
                     if (nombre) nuevosDatos.nombre = nombre;
 
@@ -127,10 +129,10 @@ class UI {
     }
 
     private listarPersonaPorDNI(): void {
-        this.rl.question("Introduce el DNI de la persona: ", (dni) => {
+        this.rl.question("\nIntroduce el DNI de la persona: ", (dni) => {
             const persona = this.portfolio.buscarPersonaPorDNI(dni);
             if (persona) {
-                console.log(`Detalles de la persona:`);
+                console.log(`\nDetalles de la persona:`);
                 console.log(`DNI: ${persona.dni}`);
                 console.log(`Nombre: ${persona.nombre}`);
                 console.log(`Habilidades: ${persona.habilidades.join(', ')}`);

@@ -11,14 +11,14 @@ class UI {
         this.mostrarMenu();
     }
     mostrarMenu() {
-        console.log("Opciones:");
+        console.log("\nMENÚ DE OPCIONES:");
         console.log("1. Listar personas");
         console.log("2. Agregar persona");
         console.log("3. Borrar persona");
         console.log("4. Modificar persona");
         console.log("5. Listar persona por DNI"); // Nueva opción
         console.log("6. Salir"); // Actualizar número de opción
-        this.rl.question("Elige una opción: ", (opcion) => {
+        this.rl.question("\nINGRESA LA OPCIÓN SELECCIONADA: ", (opcion) => {
             switch (opcion) {
                 case '1':
                     this.portfolio.listarPersonas();
@@ -45,29 +45,30 @@ class UI {
         });
     }
     agregarPersona() {
+        console.log("\nAGREGAR PERSONA:");
         this.rl.question("DNI: ", (dni) => {
             this.rl.question("Nombre: ", (nombre) => {
                 const nuevaPersona = { dni, nombre, habilidades: [], estudios: [], experiencias: [], expectativas: [] };
                 this.portfolio.agregarPersona(nuevaPersona);
-                console.log("Persona agregada.");
+                console.log("\nPERSONA AGREGADA CON ÉXITO.");
                 this.mostrarMenu();
             });
         });
     }
     borrarPersona() {
-        this.rl.question("DNI de la persona a borrar: ", (dni) => {
+        this.rl.question("\nINGRESE EL DNI DE LA PERSONA A BORRAR: ", (dni) => {
             const eliminado = this.portfolio.borrarPersona(dni);
             if (eliminado) {
-                console.log("Persona borrada.");
+                console.log("\nPERSONA BORRADA CON ÉXITO.");
             }
             else {
-                console.log("Persona no encontrada.");
+                console.log("\nPERSONA NO ENCONTRADA.");
             }
             this.mostrarMenu();
         });
     }
     modificarPersona() {
-        this.rl.question("DNI de la persona a modificar: ", (dni) => {
+        this.rl.question("\nDNI de la persona a modificar: ", (dni) => {
             const persona = this.portfolio.buscarPersonaPorDNI(dni);
             if (persona) {
                 console.log(`Atributos actuales de la persona:`);
@@ -118,10 +119,10 @@ class UI {
         });
     }
     listarPersonaPorDNI() {
-        this.rl.question("Introduce el DNI de la persona: ", (dni) => {
+        this.rl.question("\nIntroduce el DNI de la persona: ", (dni) => {
             const persona = this.portfolio.buscarPersonaPorDNI(dni);
             if (persona) {
-                console.log(`Detalles de la persona:`);
+                console.log(`\nDetalles de la persona:`);
                 console.log(`DNI: ${persona.dni}`);
                 console.log(`Nombre: ${persona.nombre}`);
                 console.log(`Habilidades: ${persona.habilidades.join(', ')}`);

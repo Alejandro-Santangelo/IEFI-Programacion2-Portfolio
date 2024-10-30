@@ -1,16 +1,10 @@
 import { ArchivoManager } from './archivoManager'; // Importación nombrada
+import { IPersona } from './IPersona';
 
-export interface Persona { // Asegúrate de exportar la interfaz
-    dni: string; // DNI como propiedad
-    nombre: string;
-    habilidades: string[];
-    estudios: string[];
-    experiencias: string[];
-    expectativas: string[];
-}
+
 
 class Portfolio {
-    personas: Persona[];
+    personas: IPersona[];
     archivoManager: ArchivoManager; // Agrega una propiedad para el archivo manager
 
     constructor(archivoManager: ArchivoManager) { // Modifica el constructor para aceptar un argumento
@@ -19,13 +13,13 @@ class Portfolio {
     }
 
     // Método para agregar una persona
-    public agregarPersona(persona: Persona): void {
+    public agregarPersona(persona: IPersona): void {
         this.personas.push(persona);
         this.archivoManager.guardar(this.personas); // Guardar cambios en el archivo
     }
 
     // Método para modificar una persona existente
-    public modificarPersona(dni: string, nuevosDatos: Partial<Persona>): boolean {
+    public modificarPersona(dni: string, nuevosDatos: Partial<IPersona>): boolean {
         const index = this.personas.findIndex(persona => persona.dni === dni);
         if (index !== -1) {
             // Actualiza los atributos de la persona
@@ -49,9 +43,9 @@ class Portfolio {
 
     // Método para listar personas
     public listarPersonas(): void {
-        console.log("Listado de personas:");
+        console.log("\nLISTADO DE PERSONAS:");
         if (this.personas.length === 0) {
-            console.log("No hay personas en el portafolio.");
+            console.log("\nNo hay personas en el portafolio.");
         } else {
             this.personas.forEach(persona => {
                 console.log(`DNI: ${persona.dni}`);
@@ -66,12 +60,12 @@ class Portfolio {
     }
 
     // Método para buscar una persona por DNI
-    public buscarPersonaPorDNI(dni: string): Persona | undefined {
+    public buscarPersonaPorDNI(dni: string): IPersona | undefined {
         return this.personas.find(persona => persona.dni === dni);
     }
 
     // Método para obtener los detalles de una persona por DNI
-    public obtenerPersonaPorDNI(dni: string): Persona | undefined {
+    public obtenerPersonaPorDNI(dni: string): IPersona | undefined {
         const persona = this.buscarPersonaPorDNI(dni);
         return persona; // Devuelve la persona si se encuentra
     }

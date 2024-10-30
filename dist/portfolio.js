@@ -33,9 +33,9 @@ class Portfolio {
     }
     // Método para listar personas
     listarPersonas() {
-        console.log("Listado de personas:");
+        console.log("\nLISTADO DE PERSONAS:");
         if (this.personas.length === 0) {
-            console.log("No hay personas en el portafolio.");
+            console.log("\nNo hay personas en el portafolio.");
         }
         else {
             this.personas.forEach(persona => {
