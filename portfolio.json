@@ -15,5 +15,21 @@
     "expectativas": [
       "Crecimiento profesional"
     ]
+  },
+  {
+    "dni": "7777777",
+    "nombre": "Cacho",
+    "habilidades": [
+      "Desarrollador"
+    ],
+    "estudios": [
+      "terciarios"
+    ],
+    "experiencias": [
+      "testing"
+    ],
+    "expectativas": [
+      "seguir aprendiendo"
+    ]
   }
 ]
