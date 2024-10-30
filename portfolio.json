@@ -1,19 +1,107 @@
 [
   {
-    "dni": "87654321",
-    "nombre": "María Gómez",
+    "dni": "1111111",
+    "nombre": "Cacho",
+    "apellido": "Santangelo",
     "habilidades": [
-      "Python",
-      "Java"
+      {
+        "nombre": "Zorro Viejo",
+        "nivel": "Básico"
+      }
     ],
     "estudios": [
-      "Ingeniería de Software"
+      {
+        "titulo": "Terciarios",
+        "institucion": "Desconocida",
+        "anio": 2023
+      }
     ],
     "experiencias": [
-      "Analista en ABC"
+      {
+        "puesto": "Ninguna",
+        "empresa": "Desconocida",
+        "anioInicio": 2022,
+        "anioFin": 2023
+      }
     ],
     "expectativas": [
-      "Crecimiento profesional"
+      {
+        "descripcion": "Muchisimas",
+        "salarioEsperado": 0
+      }
+    ]
+  },
+  {
+    "dni": "2222222",
+    "nombre": "Paz",
+    "apellido": "Santangelo",
+    "habilidades": [
+      {
+        "nombre": "Full Stack",
+        "nivel": "Básico"
+      }
+    ],
+    "estudios": [
+      {
+        "titulo": "Universitarios",
+        "institucion": "Desconocida",
+        "anio": 2023
+      },
+      {
+        "titulo": "Terciarios",
+        "institucion": "Desconocida",
+        "anio": 2023
+      }
+    ],
+    "experiencias": [
+      {
+        "puesto": "1 año como Developer",
+        "empresa": "Desconocida",
+        "anioInicio": 2022,
+        "anioFin": 2023
+      }
+    ],
+    "expectativas": [
+      {
+        "descripcion": "Seguir Creciendo",
+        "salarioEsperado": 0
+      }
+    ]
+  },
+  {
+    "dni": "3333333",
+    "nombre": "Maria Paula",
+    "apellido": "Chianelli",
+    "habilidades": [
+      {
+        "nombre": "Profesora de Biologia",
+        "nivel": "Básico"
+      },
+      {
+        "nombre": "Capacitadora TIC",
+        "nivel": "Básico"
+      }
+    ],
+    "estudios": [
+      {
+        "titulo": "Terciarios",
+        "institucion": "Desconocida",
+        "anio": 2023
+      }
+    ],
+    "experiencias": [
+      {
+        "puesto": "40 años en la Docencia",
+        "empresa": "Desconocida",
+        "anioInicio": 2022,
+        "anioFin": 2023
+      }
+    ],
+    "expectativas": [
+      {
+        "descripcion": "Jubilarse pronto",
+        "salarioEsperado": 0
+      }
     ]
   }
 ]
